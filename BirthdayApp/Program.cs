@@ -1,4 +1,6 @@
 using BirthdayApp.Data;
+using BirthdayApp.Services;
+using BirthdayApp.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +21,14 @@ namespace BirthdayApp
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            // Data repositories
+            //builder.Services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+            //builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+            // Application services
+            builder.Services.AddSingleton<IUserService, UserService>();
+            builder.Services.AddSingleton<IVotingService, VotingService>();
 
             var app = builder.Build();
 
