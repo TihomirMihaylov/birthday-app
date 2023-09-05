@@ -1,4 +1,5 @@
 using BirthdayApp.Data;
+using BirthdayApp.Data.Models;
 using BirthdayApp.Data.Repositories;
 using BirthdayApp.Services;
 using BirthdayApp.Services.Interfaces;
@@ -19,8 +20,17 @@ namespace BirthdayApp
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services
+                .AddDefaultIdentity <ApplicationUser>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+            })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
             builder.Services.AddControllersWithViews();
 
             // Data repositories
