@@ -28,12 +28,8 @@ namespace BirthdayApp.Controllers
             try
             {
                 var users = await _userService.GetUsersAsync(Cts.Token);
-
-                var model = new UsersPageViewModel()
-                {
-                    //Do not show current user on the list. They shouldn't be able to start a voting for themselves
-                    Users = users.Where(x => x.Id != currentUser.Id).ToList()
-                };
+                //Do not show current user on the list. They shouldn't be able to start a voting for themselves
+                var model = users.Where(x => x.Id != currentUser.Id).ToList();
 
                 return View(model);
             }
