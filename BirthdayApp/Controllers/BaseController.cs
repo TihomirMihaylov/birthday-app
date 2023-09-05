@@ -11,8 +11,9 @@ namespace BirthdayApp.Controllers
             Cts = new CancellationTokenSource();
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
+            base.Dispose();
             Cts.Cancel();
             Cts.Dispose();
             GC.SuppressFinalize(this);
