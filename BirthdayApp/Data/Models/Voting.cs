@@ -10,7 +10,7 @@
         public string InitiatorId { get; set; }
         public virtual ApplicationUser Initiator { get; set; }
 
-        public bool IsActive { get; set; } = true;
+        public bool IsActive { get; set; }
 
         public virtual ICollection<UserVote> PeopleVoted { get; set; } = new HashSet<UserVote>();
     }

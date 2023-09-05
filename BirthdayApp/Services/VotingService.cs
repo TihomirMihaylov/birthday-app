@@ -132,7 +132,8 @@ namespace BirthdayApp.Services
             var newVoting = new Voting()
             {
                 BirthdayPersonId = birthdayPersonId,
-                InitiatorId = currentUserId
+                InitiatorId = currentUserId,
+                IsActive = true
             };
 
             await _votingRepository.AddAsync(newVoting, cancellationToken);

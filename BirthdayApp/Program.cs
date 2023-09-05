@@ -27,8 +27,8 @@ namespace BirthdayApp
             builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             // Application services
-            builder.Services.AddSingleton<IUserService, UserService>();
-            builder.Services.AddSingleton<IVotingService, VotingService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IVotingService, VotingService>();
 
             var app = builder.Build();
 
