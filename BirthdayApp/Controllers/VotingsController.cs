@@ -68,22 +68,61 @@ namespace BirthdayApp.Controllers
         [HttpPost]
         public async Task<IActionResult> StartVoting(string birthdayPersonId)
         {
-            await _votingService.StartVotingAsync(birthdayPersonId, Cts.Token);
-            return RedirectToAction(nameof(this.AllActive));
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            try
+            {
+                await _votingService.StartVotingAsync(birthdayPersonId, currentUser.Id, Cts.Token);
+
+                return RedirectToAction(nameof(this.AllActive));
+            }
+            catch (ValidationException validationEx)
+            {
+                return BadRequest(validationEx.Message);
+            }
+            catch (EntityNotFoundException notFoundEx)
+            {
+                return NotFound(notFoundEx.Message);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> EndVoting(int votingId)
         {
-            await _votingService.EndVotingAsync(votingId, Cts.Token);
-            return RedirectToAction(nameof(this.AllFinished));
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            try
+            {
+                await _votingService.EndVotingAsync(votingId, currentUser.Id, Cts.Token);
+
+                return RedirectToAction(nameof(this.AllFinished));
+            }
+            catch (ValidationException validationEx)
+            {
+                return BadRequest(validationEx.Message);
+            }
+            catch (EntityNotFoundException notFoundEx)
+            {
+                return NotFound(notFoundEx.Message);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Vote(int votingId, int presentId)
         {
-            await _votingService.VoteAsync(votingId, presentId, Cts.Token);
-            return Ok("Voted successfully");
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            try
+            {
+                await _votingService.VoteAsync(votingId, presentId, currentUser.Id, Cts.Token);
+
+                return Ok("Voted successfully");
+            }
+            catch (ValidationException validationEx)
+            {
+                return BadRequest(validationEx.Message);
+            }
+            catch (EntityNotFoundException notFoundEx)
+            {
+                return NotFound(notFoundEx.Message);
+            }
         }
     }
 }

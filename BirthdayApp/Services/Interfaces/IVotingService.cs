@@ -8,10 +8,10 @@ namespace BirthdayApp.Services.Interfaces
 
         Task<IList<FinishedVotingViewModel>> GetFinishedVotingsAsync(CancellationToken cancellationToken);
 
-        Task StartVotingAsync(string birthdayPersonId, CancellationToken cancellationToken);
+        Task StartVotingAsync(string birthdayPersonId, string currentUserId,  CancellationToken cancellationToken);
 
-        Task EndVotingAsync(int votingId, CancellationToken cancellationToken);
+        Task EndVotingAsync(int votingId, string currentUserId, CancellationToken cancellationToken);
 
-        Task VoteAsync(int votingId, int presentId, CancellationToken cancellationToken);
+        Task VoteAsync(int votingId, int presentId, string currentUserId, CancellationToken cancellationToken);
     }
 }

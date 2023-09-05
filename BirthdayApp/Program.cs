@@ -1,4 +1,5 @@
 using BirthdayApp.Data;
+using BirthdayApp.Data.Repositories;
 using BirthdayApp.Services;
 using BirthdayApp.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -23,8 +24,7 @@ namespace BirthdayApp
             builder.Services.AddControllersWithViews();
 
             // Data repositories
-            //builder.Services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-            //builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             // Application services
             builder.Services.AddSingleton<IUserService, UserService>();

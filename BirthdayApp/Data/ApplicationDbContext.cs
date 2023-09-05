@@ -11,7 +11,7 @@ namespace BirthdayApp.Data
         {
         }
 
-        public DbSet<ApplicationUser> Users { get; set; }
+        public override DbSet<ApplicationUser> Users { get; set; }
 
         public DbSet<Voting> Voting { get; set; }
 
