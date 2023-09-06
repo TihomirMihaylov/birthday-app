@@ -1,0 +1,26 @@
+1. Open app in Visual Studio
+2. In PM console execute command "update-database"
+3. Open local DB with SQL Server Management Studio 
+4. Execute script to seed presents:
+
+
+INSERT INTO Presents (Name, Price)
+VALUES
+    ('iPhone', 500),
+    ('Headphones', 200),
+    ('Voucher', 250),
+    ('Outdoor Experience', 280),
+    ('SPA weekend', 300);
+
+
+5. Run the app
+6. Register several accounts
+7. For each registered account execute script:
+
+
+UPDATE AspNetUsers 
+SET FirstName ='firstNameIfTheUser', LastName = 'lastNameOfTheUser', Birthday = 'YYYY-MM-DD'
+WHERE UserName = 'user e-mail';
+
+
+8. Enjoy the app
