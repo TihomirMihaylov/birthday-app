@@ -19,7 +19,8 @@
                     <td>@voting.BirthdayPersonBirthday.ToShortDateString()</td>
                     <td>@voting.InitiatorFirstName @voting.InitiatorLastName</td>
                     <td>
-                        TODO
+                        <button class="btn btn-primary vote-button" data-voting-id="@voting.Id">Vote</button>
+                        <button class="btn btn-danger end-voting-button" data-voting-id="@voting.Id">End Voting</button>
                     </td>
                 </tr>
             }
@@ -27,3 +28,27 @@
     </table>
 </div>
 
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.end-voting-button').on('click', function () {
+                var votingId = $(this).data('voting-id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/Votings/EndVoting',
+                    data: { votingId: votingId },
+                    success: function () {
+                        alert('Voting ended successfully.');
+                    },
+                    error: function (error) {
+                        alert('Error: ' + error.responseText);
+                    }
+                });
+            });
+
+            $('.vote-button').on('click', function () {
+                alert('Vote button clicked.');
+            });
+        });
+    </script>
+}
