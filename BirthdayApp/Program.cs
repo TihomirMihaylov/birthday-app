@@ -39,6 +39,7 @@ namespace BirthdayApp
             // Application services
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IVotingService, VotingService>();
+            builder.Services.AddScoped<IPresentService, PresentService>();
 
             var app = builder.Build();
 

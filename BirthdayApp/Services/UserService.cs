@@ -29,7 +29,6 @@ namespace BirthdayApp.Services
                     LastName = x.LastName ?? "n/a",
                     Birthday = x.Birthday
                 }).ToList();
-
             }
             catch (Exception ex)
             {
