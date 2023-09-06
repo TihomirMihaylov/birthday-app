@@ -95,6 +95,11 @@ namespace BirthdayApp.Services
                     var peopleNotVoted = new List<UserVoteViewModel>();
                     foreach (var user in allUsers)
                     {
+                        if (user.Id == finishedVoting.BirthdayPersonId)
+                        {
+                            continue;
+                        }
+
                         if (!finishedVoting.UserVotes.Select(x => x.UserId).Contains(user.Id))
                         {
                             peopleNotVoted.Add(new UserVoteViewModel()
