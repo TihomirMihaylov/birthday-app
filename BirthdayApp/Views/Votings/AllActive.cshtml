@@ -79,10 +79,10 @@
             }
 
             $('.vote-options').on('click', function () {
+                $('.vote-options-row').hide();
+                resetRadioButtons();
+
                 var voteOptionsRow = $(this).closest('tr').next('.vote-options-row');
-                if (voteOptionsRow.is(':visible')) {
-                    resetRadioButtons();
-                }
                 voteOptionsRow.toggle();
             });
 
