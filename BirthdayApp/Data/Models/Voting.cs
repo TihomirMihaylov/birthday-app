@@ -12,6 +12,8 @@
 
         public bool IsActive { get; set; }
 
+        public DateTime CreatedOn { get; set; }
+
         public virtual ICollection<UserVote> PeopleVoted { get; set; } = new HashSet<UserVote>();
     }
 }

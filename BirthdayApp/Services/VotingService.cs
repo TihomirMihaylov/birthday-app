@@ -135,7 +135,8 @@ namespace BirthdayApp.Services
             {
                 BirthdayPersonId = birthdayPersonId,
                 InitiatorId = currentUserId,
-                IsActive = true
+                IsActive = true,
+                CreatedOn = DateTime.UtcNow
             };
 
             await _votingRepository.AddAsync(newVoting, cancellationToken);
@@ -193,13 +194,13 @@ namespace BirthdayApp.Services
                 throw new EntityNotFoundException($"Person with id {birthdayPersonId} not found");
             }
 
-            var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken, "BirthdayPerson");
+            var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken);
             var votingsForThisPerson = allVotings.Where(x => x.BirthdayPersonId == birthdayPersonId).ToList();
             if (votingsForThisPerson.Any(x => x.IsActive))
             {
                 throw new ValidationException("This person already has an active voting");
             }
-            if (votingsForThisPerson.Any(x => x.BirthdayPerson.Birthday.Year == DateTime.UtcNow.Year))
+            if (votingsForThisPerson.Any(x => x.CreatedOn.Year == DateTime.UtcNow.Year))
             {
                 throw new ValidationException("Cannot start a new voting for this person till the end of the year");
             }
