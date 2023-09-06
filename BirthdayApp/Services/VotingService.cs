@@ -65,7 +65,7 @@ namespace BirthdayApp.Services
                 var allUserVotes = await _userVotesRepository.AllAsNoTrackingAsync(cancellationToken, "User", "Present");
 
                 var allFinishedMapped = allVotings
-                    .Where(v => v.IsActive)
+                    .Where(v => !v.IsActive)
                     .OrderByDescending(x => x.BirthdayPerson.Birthday)
                     .Select(v => new FinishedVotingViewModel()
                     {
