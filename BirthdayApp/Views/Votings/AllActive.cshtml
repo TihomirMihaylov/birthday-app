@@ -21,10 +21,11 @@
                         <td>@voting.BirthdayPersonBirthday.ToShortDateString()</td>
                         <td>@voting.InitiatorFirstName @voting.InitiatorLastName</td>
                         <td>
-                            <button class="btn btn-primary vote-button" data-voting-id="@voting.Id">Vote</button>
+                            <button class="btn btn-primary vote-options" data-voting-id="@voting.Id">See Vote Options</button>
                             <button class="btn btn-danger end-voting-button" data-voting-id="@voting.Id">End Voting</button>
                         </td>
                     </tr>
+                    <tr class="vote-options-row" style="display: none;"></tr>
                 }
             </tbody>
         </table>
@@ -38,12 +39,21 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            function fetchPresents() {
+            function fetchPresentsAndPopulateRadioButtons() {
                 $.ajax({
                     type: 'GET',
                     url: '/Presents/All',
                     success: function (data) {
                         var presents = data;
+
+                        var radioButtonsHtml = '';
+                        for (var i = 0; i < presents.length; i++) {
+                            var present = presents[i];
+                            radioButtonsHtml += '<input class="form-check-input" type="radio" name="voteOption" id="present-' + present.id + '" value="' + present.id + '">';
+                            radioButtonsHtml += '<label class="form-check-label" for="present-' + present.id + '">' + present.name + ' (' + present.price + ')</label><br>';
+                        }
+
+                        $('.vote-options-row').html('<td colspan="4"><div class="form-check vote-options-container">' + radioButtonsHtml + '</div></td>');
                     },
                     error: function (error) {
                         alert('Error fetching presents: ' + error.responseText);
@@ -51,7 +61,12 @@
                 });
             }
 
-            fetchPresents();
+            fetchPresentsAndPopulateRadioButtons();            
+
+            $('.vote-options').on('click', function () {
+                var voteOptionsRow = $(this).closest('tr').next('.vote-options-row');
+                voteOptionsRow.toggle();
+            });
 
             $('.end-voting-button').on('click', function () {
                 var votingId = $(this).data('voting-id');
@@ -68,10 +83,23 @@
                     }
                 });
             });
-
-            $('.vote-button').on('click', function () {
-                alert('Vote button clicked.');
-            });
         });
     </script>
+}
+
+@section Styles {
+    <style>
+        .vote-options-container {
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        .form-check-input {
+            margin-right: 5px;
+        }
+
+        .form-check-label {
+            margin-right: 15px;
+        }
+    </style>
 }
