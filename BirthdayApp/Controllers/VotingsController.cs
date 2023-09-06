@@ -28,12 +28,8 @@ namespace BirthdayApp.Controllers
             try
             {
                 var activeVotings = await _votingService.GetActiveVotingsAsync(Cts.Token);
-
-                var model = new ActiveVotingPageViewModel()
-                {
-                    //Do not show votings for the current user on the list.
-                    Votings = activeVotings.Where(v => v.BirthdayPersonId != currentUser.Id).ToList()
-                };
+                //Do not show votings for the current user on the list.
+                var model = activeVotings.Where(v => v.BirthdayPersonId != currentUser.Id).ToList();
 
                 return View(model);
             }
@@ -50,12 +46,8 @@ namespace BirthdayApp.Controllers
             try
             {
                 var finishedVotings = await _votingService.GetFinishedVotingsAsync(Cts.Token);
-
-                var model = new FinishedVotingPageViewModel()
-                {
-                    //Do not show votings for the current user on the list.
-                    Votings = finishedVotings.Where(v => v.BirthdayPersonId != currentUser.Id).ToList()
-                };
+                //Do not show votings for the current user on the list.
+                var model = finishedVotings.Where(v => v.BirthdayPersonId != currentUser.Id).ToList();
 
                 return View(model);
             }
