@@ -21,7 +21,28 @@
                         <td>@voting.BirthdayPersonBirthday.ToShortDateString()</td>
                         <td>@voting.InitiatorFirstName @voting.InitiatorLastName</td>
                         <td>
-                            TODO
+                            <button class="btn btn-primary see-results-button" data-toggle="modal" data-target="#resultsModal">See Results</button>
+                        </td>
+                    </tr>
+                    <tr class="additional-info-row" style="display: none;">
+                        <td colspan="4">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Person</th>
+                                        <th>Vote</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var userVote in voting.UserVotes)
+                                    {
+                                        <tr>
+                                            <td>@userVote.FirstName @userVote.LastName</td>
+                                            <td>@userVote.PresentName</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
                 }
@@ -33,3 +54,14 @@
         <p>No finished votings at the moment.</p>
     }
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.see-results-button').on('click', function () {
+                var $additionalInfoRow = $(this).closest('tr').next('.additional-info-row');
+                $additionalInfoRow.toggle();
+            });
+        });
+    </script>
+}
