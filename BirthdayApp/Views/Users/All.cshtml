@@ -8,6 +8,7 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Birthday</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -17,8 +18,32 @@
                     <td>@user.FirstName</td>
                     <td>@user.LastName</td>
                     <td>@user.Birthday.ToShortDateString()</td>
+                    <td>
+                        <button class="btn btn-primary start-voting" data-user-id="@user.Id">Start Voting</button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.start-voting').on('click', function () {
+                var userId = $(this).data('user-id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/Votings/StartVoting',
+                    data: { birthdayPersonId: userId },
+                    success: function (result) {
+                        alert("Successully started voting")
+                    },
+                    error: function (error) {
+                        alert('Error: ' + error.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
