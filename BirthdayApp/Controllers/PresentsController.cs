@@ -22,7 +22,7 @@ namespace BirthdayApp.Controllers
             {
                 var model = await _presentService.GetPresentsAsync(Cts.Token);
 
-                return View(model);
+                return Ok(model);
             }
             catch (DatabaseException dbEx)
             {

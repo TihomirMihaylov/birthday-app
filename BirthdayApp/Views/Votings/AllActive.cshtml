@@ -38,6 +38,21 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            function fetchPresents() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/Presents/All',
+                    success: function (data) {
+                        var presents = data;
+                    },
+                    error: function (error) {
+                        alert('Error fetching presents: ' + error.responseText);
+                    }
+                });
+            }
+
+            fetchPresents();
+
             $('.end-voting-button').on('click', function () {
                 var votingId = $(this).data('voting-id');
                 $.ajax({
