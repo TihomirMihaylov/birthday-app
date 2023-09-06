@@ -1,6 +1,35 @@
-﻿@*@model IEnumerable<UserViewModel>
-    *@
+﻿@model IEnumerable<FinishedVotingViewModel>
 
 <div class="text-center">
     <h1>Finished Votings</h1>
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Birthday person</th>
+                    <th>Birthday</th>
+                    <th>Initiator</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var voting in Model)
+                {
+                    <tr>
+                        <td>@voting.BirthdayPersonFirstName @voting.BirthdayPersonLastName</td>
+                        <td>@voting.BirthdayPersonBirthday.ToShortDateString()</td>
+                        <td>@voting.InitiatorFirstName @voting.InitiatorLastName</td>
+                        <td>
+                            TODO
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No finished votings at the moment.</p>
+    }
 </div>
