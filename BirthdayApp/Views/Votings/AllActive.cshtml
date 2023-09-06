@@ -13,7 +13,7 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="event-delegation-wrapper">
                 @foreach (var voting in Model)
                 {
                     <tr>
@@ -53,7 +53,17 @@
                             radioButtonsHtml += '<label class="form-check-label" for="present-' + present.id + '">' + present.name + ' (' + present.price + ')</label><br>';
                         }
 
-                        $('.vote-options-row').html('<td colspan="4"><div class="form-check vote-options-container">' + radioButtonsHtml + '</div></td>');
+                        $('.vote-options-row').html(
+                            '<td colspan="4"><div class="form-check vote-options-container">' +
+                            radioButtonsHtml +
+                            '<button class="btn btn-success vote-button" disabled>Vote</button>' +
+                            '</div></td>'
+                        );
+
+                        $('input[name="voteOption"]').on('change', function () {
+                            var isRadioSelected = $('input[name="voteOption"]:checked').length > 0;
+                            $('.vote-button').prop('disabled', !isRadioSelected);
+                        });
                     },
                     error: function (error) {
                         alert('Error fetching presents: ' + error.responseText);
@@ -61,10 +71,18 @@
                 });
             }
 
-            fetchPresentsAndPopulateRadioButtons();            
+            fetchPresentsAndPopulateRadioButtons();
+
+            function resetRadioButtons() {
+                $('input[name="voteOption"]').prop('checked', false);
+                $('.vote-button').prop('disabled', true);
+            }
 
             $('.vote-options').on('click', function () {
                 var voteOptionsRow = $(this).closest('tr').next('.vote-options-row');
+                if (voteOptionsRow.is(':visible')) {
+                    resetRadioButtons();
+                }
                 voteOptionsRow.toggle();
             });
 
@@ -80,6 +98,24 @@
                     },
                     error: function (error) {
                         alert('Error: ' + error.responseText);
+                    }
+                });
+            });
+
+            $('.event-delegation-wrapper').on('click', '.vote-button', function () {
+                var votingId = $(this).closest('tr').prev().find('.vote-options').data('voting-id');
+                var presentId = $('input[name="voteOption"]:checked').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/Votings/Vote',
+                    data: { votingId: votingId, presentId: presentId },
+                    success: function () {
+                        alert('Vote submitted successfully.');
+                        $('.vote-options').click();
+                    },
+                    error: function (error) {
+                        alert('Error: ' + error.responseText);
+                        $('.vote-options').click();
                     }
                 });
             });

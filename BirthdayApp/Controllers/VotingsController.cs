@@ -1,7 +1,6 @@
 ﻿using BirthdayApp.Common.CustomExceptions;
 using BirthdayApp.Data.Models;
 using BirthdayApp.Services.Interfaces;
-using BirthdayApp.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
