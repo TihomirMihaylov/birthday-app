@@ -41,12 +41,12 @@ namespace BirthdayApp.Services
                 {
                     Id = x.Id,
                     BirthdayPersonId = x.BirthdayPerson.Id,
-                    BirthdayPersonFirstName = x.BirthdayPerson.FirstName,
-                    BirthdayPersonLastName = x.BirthdayPerson.LastName,
+                    BirthdayPersonFirstName = x.BirthdayPerson.FirstName ?? "n/a",
+                    BirthdayPersonLastName = x.BirthdayPerson.LastName ?? "n/a",
                     BirthdayPersonBirthday = x.BirthdayPerson.Birthday,
                     InitiatorId = x.InitiatorId,
-                    InitiatorFirstName = x.Initiator.FirstName,
-                    InitiatorLastName = x.Initiator.LastName
+                    InitiatorFirstName = x.Initiator.FirstName ?? "n/a",
+                    InitiatorLastName = x.Initiator.LastName ?? "n/a"
                 }).ToList();
             }
             catch (Exception ex)
@@ -71,19 +71,19 @@ namespace BirthdayApp.Services
                     {
                         Id = v.Id,
                         BirthdayPersonId = v.BirthdayPerson.Id,
-                        BirthdayPersonFirstName = v.BirthdayPerson.FirstName,
-                        BirthdayPersonLastName = v.BirthdayPerson.LastName,
+                        BirthdayPersonFirstName = v.BirthdayPerson.FirstName ?? "n/a",
+                        BirthdayPersonLastName = v.BirthdayPerson.LastName ?? "n/a",
                         BirthdayPersonBirthday = v.BirthdayPerson.Birthday,
                         InitiatorId = v.InitiatorId,
-                        InitiatorFirstName = v.Initiator.FirstName,
-                        InitiatorLastName = v.Initiator.LastName,
+                        InitiatorFirstName = v.Initiator.FirstName ?? "n/a",
+                        InitiatorLastName = v.Initiator.LastName ?? "n/a",
                         UserVotes = allUserVotes
                         .Where(uv => uv.VotingId == v.Id)
                         .Select(uv => new UserVoteViewModel()
                         {
                             UserId = uv.UserId,
-                            FirstName = uv.User.FirstName,
-                            LastName = uv.User.LastName,
+                            FirstName = uv.User.FirstName ?? "n/a",
+                            LastName = uv.User.LastName ?? "n/a",
                             PresentName = uv.Present.Name
                         }).ToList()
                     }).ToList();
@@ -100,8 +100,8 @@ namespace BirthdayApp.Services
                             peopleNotVoted.Add(new UserVoteViewModel()
                             {
                                 UserId = user.Id,
-                                FirstName = user.FirstName,
-                                LastName = user.LastName,
+                                FirstName = user.FirstName ?? "n/a",
+                                LastName = user.LastName ?? "n/a",
                                 PresentName = "not voted"
                             });
                         }

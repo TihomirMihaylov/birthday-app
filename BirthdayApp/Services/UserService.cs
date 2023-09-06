@@ -25,8 +25,8 @@ namespace BirthdayApp.Services
                 return allUsers.Select(x => new UserViewModel
                 {
                     Id = x.Id,
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
+                    FirstName = x.FirstName ?? "n/a",
+                    LastName = x.LastName ?? "n/a",
                     Birthday = x.Birthday
                 }).ToList();
 
