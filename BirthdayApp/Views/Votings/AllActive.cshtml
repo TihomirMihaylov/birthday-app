@@ -1,7 +1,29 @@
-﻿@*@model IEnumerable<UserViewModel>*@
+﻿@model IEnumerable<ActiveVotingViewModel>
 
 <div class="text-center">
     <h1>Active</h1>
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Birthday person</th>
+                <th>Birthday</th>
+                <th>Initiator</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var voting in Model)
+            {
+                <tr>
+                    <td>@voting.BirthdayPersonFirstName @voting.BirthdayPersonLastName</td>
+                    <td>@voting.BirthdayPersonBirthday.ToShortDateString()</td>
+                    <td>@voting.InitiatorFirstName @voting.InitiatorLastName</td>
+                    <td>
+                        TODO
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
