@@ -3,9 +3,9 @@
     public interface IRepository<TEntity> : IDisposable
         where TEntity : class
     {
-        Task<List<TEntity>> AllAsync(CancellationToken cancellationToken);
+        Task<List<TEntity>> AllAsync(CancellationToken cancellationToken, params string[] navigatinProperties);
 
-        Task<List<TEntity>> AllAsNoTrackingAsync(CancellationToken cancellationToken);
+        Task<List<TEntity>> AllAsNoTrackingAsync(CancellationToken cancellationToken, params string[] navigatinProperties);
 
         ValueTask<TEntity> GetByIdAsync(CancellationToken cancellationToken, params object[] id);
 

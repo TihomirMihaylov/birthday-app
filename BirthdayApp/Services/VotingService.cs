@@ -33,7 +33,7 @@ namespace BirthdayApp.Services
         {
             try
             {
-                var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken);
+                var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken, "BirthdayPerson", "Initiator");
                 return allVotings
                     .Where(x => x.IsActive)
                     .Select(x => new ActiveVotingViewModel()
@@ -60,8 +60,8 @@ namespace BirthdayApp.Services
         {
             try
             {
-                var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken);
-                var allUserVotes = await _userVotesRepository.AllAsNoTrackingAsync(cancellationToken);
+                var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken, "BirthdayPerson", "Initiator");
+                var allUserVotes = await _userVotesRepository.AllAsNoTrackingAsync(cancellationToken, "User", "Present");
 
                 var allFinishedMapped = allVotings
                     .Where(v => v.IsActive)
@@ -191,7 +191,7 @@ namespace BirthdayApp.Services
                 throw new EntityNotFoundException($"Person with id {birthdayPersonId} not found");
             }
 
-            var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken);
+            var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken, "BirthdayPerson");
             var votingsForThisPerson = allVotings.Where(x => x.BirthdayPersonId == birthdayPersonId);
             if (votingsForThisPerson.Any(x => x.IsActive))
             {
@@ -219,12 +219,7 @@ namespace BirthdayApp.Services
             }
             if (!currentVoting.IsActive)
             {
-                throw new ValidationException("Cannot vote in a finished voting");
-            }
-
-            if (!currentVoting.IsActive)
-            {
-                throw new ValidationException("The voting is already finished");
+                throw new ValidationException("The voting has already finished");
             }
         }
 

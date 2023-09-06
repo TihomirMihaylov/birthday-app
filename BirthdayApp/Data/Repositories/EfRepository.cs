@@ -15,12 +15,29 @@ namespace BirthdayApp.Data.Repositories
 
         protected ApplicationDbContext Context { get; set; }
 
-        public virtual Task<List<TEntity>> AllAsync(CancellationToken cancellationToken)
-            => DbSet.ToListAsync(cancellationToken);
+        public virtual Task<List<TEntity>> AllAsync(CancellationToken cancellationToken, params string[] navigatinProperties)
+        {
+            var result = DbSet.AsQueryable<TEntity>();
+            foreach (var property in navigatinProperties)
+            {
+                result = result.Include(property);
+            }
+
+            return result.ToListAsync(cancellationToken);
+        } 
 
 
-        public virtual Task<List<TEntity>> AllAsNoTrackingAsync(CancellationToken cancellationToken)
-            => DbSet.AsNoTracking().ToListAsync(cancellationToken);
+        public virtual Task<List<TEntity>> AllAsNoTrackingAsync(CancellationToken cancellationToken, params string[] navigatinProperties)
+        {
+
+            var result = DbSet.AsNoTracking();
+            foreach (var property in navigatinProperties)
+            {
+                result = result.Include(property);
+            }
+
+            return result.ToListAsync(cancellationToken);
+        }
 
         public async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
             => await DbSet.AddAsync(entity, cancellationToken);
