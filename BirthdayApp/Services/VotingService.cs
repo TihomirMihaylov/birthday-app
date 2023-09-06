@@ -194,7 +194,7 @@ namespace BirthdayApp.Services
             }
 
             var allVotings = await _votingRepository.AllAsNoTrackingAsync(cancellationToken, "BirthdayPerson");
-            var votingsForThisPerson = allVotings.Where(x => x.BirthdayPersonId == birthdayPersonId);
+            var votingsForThisPerson = allVotings.Where(x => x.BirthdayPersonId == birthdayPersonId).ToList();
             if (votingsForThisPerson.Any(x => x.IsActive))
             {
                 throw new ValidationException("This person already has an active voting");
